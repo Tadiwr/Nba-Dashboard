@@ -1,0 +1,4 @@
+
+# Ignored Files
+.ipynb_checkpoints/
+/__pycache__
