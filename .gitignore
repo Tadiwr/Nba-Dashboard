@@ -1,4 +1,5 @@
 
 # Ignored Files
 .ipynb_checkpoints/
-/__pycache__
+.__pycache__
+team_ids.csv
