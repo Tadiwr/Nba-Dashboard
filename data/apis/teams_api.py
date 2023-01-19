@@ -11,6 +11,10 @@ class TeamsAPI:
 
         team_json = req.get(self.url + str(id)).text
 
-        team_data = pd.Series(pd.Series(json.loads(pd.Series(team_json)[0]))[0])
-        team_model = TeamModel(team_data)
+        # The O indexing to grab the first row including 
+        # the team wiki or data
+        team_dict = json.loads(team_json)
+
+        team_dict = team_dict["team"]
+        team_model = TeamModel(team_dict)
         return team_model
