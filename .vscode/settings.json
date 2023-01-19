@@ -2,5 +2,6 @@
     "python.analysis.extraPaths": [
         "./data",
         "./utils",
-    ]
+    ],
+    "python.analysis.typeCheckingMode": "basic"
 }
