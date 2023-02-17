@@ -7,7 +7,7 @@ def Summarize(team_data:TeamModel):
     columns = [
         "Full Name", "Abbreviation", "Division", "Location",
          "Games Played", "Win-Lose Record", "Win Percentage", 
-         "Points Scored"
+         "Points Scored", "Points Conceded"
     ]
 
     
@@ -20,6 +20,7 @@ def Summarize(team_data:TeamModel):
         team_data.stats.summary,
         team_data.stats.win_percentage,
         team_data.stats.points_scored,
+        team_data.stats.points_conceded
     ]
 
     return pd.DataFrame({
