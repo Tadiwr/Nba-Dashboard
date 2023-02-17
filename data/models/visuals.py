@@ -1,4 +1,4 @@
-from data.models.team_model import TeamModel
+from team_model import TeamModel
 import pandas as pd
 
 def Summerize(team_data:TeamModel):
@@ -9,7 +9,7 @@ def Summerize(team_data:TeamModel):
     data = [
         team_data.display_name, team_data.abbr,
         team_data.division, team_data.location, 
-        team_data.record.summary
+        team_data.stats.summary
     ]
 
     return pd.DataFrame({
