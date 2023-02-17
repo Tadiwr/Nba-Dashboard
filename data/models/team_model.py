@@ -3,6 +3,16 @@ import pandas as pd
 
 class __StatsModel__:
 
+    wins = 0
+    ties = 0
+    loses = 0
+    games_played = 0
+    streak = 0
+    points_scored = 0
+    points_conceded = 0
+    win_percentage = 0
+    summary = ""
+
     def __init__(self, stats:list[dict]) -> None:
         self.wins = int(stats[17]["value"])
         self.ties = int(stats[15]["value"])
