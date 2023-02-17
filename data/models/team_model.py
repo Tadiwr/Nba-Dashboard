@@ -2,8 +2,7 @@ from pandas import Series
 import pandas as pd
 
 class __StatsModel__:
-    summary = ""
-    
+
     def __init__(self, stats:list[dict]) -> None:
         self.wins = int(stats[17]["value"])
         self.ties = int(stats[15]["value"])
@@ -12,7 +11,7 @@ class __StatsModel__:
         self.streak = int(stats[14]["value"])
         self.points_scored = int(stats[13]["value"])
         self.points_conceded = int(stats[12]["value"])
-        self.win_percentage = stats[16]["value"] * 100
+        self.win_percentage : float = float(stats[16]["value"]) * 100
         self.summary = str(self.wins) + " - " + str(self.loses)
 
 class TeamModel:
