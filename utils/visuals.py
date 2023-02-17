@@ -45,6 +45,10 @@ def SummarizeAllTeamsWinPercentage():
         win_percentage = n_team_data.stats.win_percentage
         win_percentages.append(win_percentage)
 
-    plt.plot(teams_abbriviations, win_percentages)
+    table = pd.DataFrame({
+        "Team": teams_abbriviations,
+        "Win Percentage": win_percentages
+    })
 
+    return table
     
