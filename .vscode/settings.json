@@ -2,7 +2,7 @@
     "python.analysis.extraPaths": [
         "/data/*",
         "/utils/*",
-        "/utils/visuals.py"
+        "/utils/*"
         // "/data/models/short_team_model.py"
     ],
     "python.analysis.typeCheckingMode": "off"
