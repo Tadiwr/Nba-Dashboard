@@ -41,7 +41,7 @@ def SummarizeAllTeamsWinPercentage():
 
 
     for team in team_ids:
-        n_team_data = Repo.teams.getTeamData(id=team)
+        n_team_data = Repo.teams_api.getTeamData(id=team)
         win_percentage = n_team_data.stats.win_percentage
         win_percentages.append(win_percentage)
 

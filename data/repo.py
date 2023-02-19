@@ -4,6 +4,6 @@ from data.database.db import Database
 
 class Repo:
 
-    teams = TeamsAPI()
+    teams_api = TeamsAPI()
     static = Static()
     db = Database()
