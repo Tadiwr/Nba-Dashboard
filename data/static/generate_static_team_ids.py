@@ -71,10 +71,11 @@ class Static:
     def read_team_ids(self):
         return pd.read_csv(self.team_ids_path)
 
-    def get_team_id_by_abbr(self, abbr):
+    def get_team_id_by_abbr(self, abbr:str) -> int:
         df = self.read_team_ids()
         team = df.loc[df["Abbreviation"] == abbr]
-        return team["Id"][0]
+        id = int(team["Id"])
+        return id
         
     
     def get_team_id_by_name(self,display_name):
