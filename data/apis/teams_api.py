@@ -7,7 +7,7 @@ class TeamsAPI:
 
     url = "http://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/"
 
-    def getTeamData(self, id:str):
+    def getTeamData(self, id:int):
 
         team_json = req.get(self.url + str(id)).text
 
