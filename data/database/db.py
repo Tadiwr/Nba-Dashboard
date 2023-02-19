@@ -1,6 +1,8 @@
+from data.apis.teams_api import TeamsAPI as teams_api
 from data.models.short_team_model import ShortTeamModel
 import mysql.connector as mysql
 from pandas import DataFrame
+from utils.utils import *
 
 class Database:
 
@@ -61,7 +63,26 @@ class Database:
         )
 
         return result_model
+
+    def insertTeamPointsRow(self):
+        values_str = ""
+        points = getAllTeamsPoints(1)
+        points = points["Points Scored"].values
+        base_sql = base_insert_sql = "insert into nba.team_points values( now(),"
         
+        # Building String
+        for x in points:
+            if x != points[-1]:
+                string = f"{x},"
+            else:
+                string = f"{x}"
+
+            values_str += string
+
+        final_sql = base_insert_sql + values_str + ");"
+        self.cursor.execute(final_sql)
+        self.db.commit()
+
 
 
 
