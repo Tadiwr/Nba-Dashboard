@@ -3,4 +3,3 @@ streamlit
 matplotlib
 multipledispatch
 IPython
-mysql-connector-python
