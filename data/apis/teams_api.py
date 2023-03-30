@@ -1,7 +1,7 @@
 import requests as req
 import json
 import pandas as pd
-from data.models.team_model import TeamModel
+from data.models.team_model import TeamModel 
 
 class TeamsAPI:
 
@@ -20,4 +20,3 @@ class TeamsAPI:
         team_model = TeamModel(team_dict)
         return team_model
 
-    

@@ -5,6 +5,8 @@ import requests as req
 from multipledispatch import dispatch
 from IPython.core.display import JSON
 from data.models.team_model import TeamModel
+import utils.utils as ut
+from pathlib import Path
 
 pd = pd
 
@@ -13,9 +15,11 @@ class Static:
     url = "http://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams"
 
     team_ids_path = "./data/static/team_ids.csv"
+    team_points_path = "./team_points"
 
     def __init__(self) -> None:
         self.initialize_static_file()
+        self.generate_team_points()
 
     def genarate_team_ids(self):
         data = req.get(self.url).text
@@ -83,4 +87,13 @@ class Static:
         team = df.loc[df["Display Name"] == display_name]
         return team["Id"][0]
 
+    def generate_team_points(self):
+        path = Path("./data/static/team_points.csv")
+        if not path.is_file():
+            team_points = ut.getAllTeamsPoints(1)
+            team_points = team_points.to_csv("./data/static/team_points.csv")
+
+    def get_team_points(self):
+        team_points = pd.read_csv("./data/static/team_points.csv")
+        return team_points
 
