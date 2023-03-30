@@ -68,7 +68,7 @@ class Database:
         values_str = ""
         points = getAllTeamsPoints(1)
         points = points["Points Scored"].values
-        base_sql = base_insert_sql = "insert into nba.team_points values( now(),"
+        base_insert_sql = "insert into nba.team_points values( now(),"
         
         # Building String
         for x in points:
