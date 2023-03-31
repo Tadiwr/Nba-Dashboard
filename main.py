@@ -4,6 +4,15 @@ import streamlit as st
 import pandas as pd
 from data.repo import Repo as rp
 import utils.utils as ut
+import plotly.figure_factory as ff
+
+# config
+
+st.set_page_config(
+    page_title="NBA STATS",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
 
 st.title("NBA Statistics 🏀")
 st.write("Powered by a secret api ⚡")
@@ -53,6 +62,7 @@ def avePoints():
         "Rounded Average",
         int(ave),
     )
+
 
 
 leastPoints()
