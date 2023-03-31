@@ -6,7 +6,7 @@ from data.repo import Repo as rp
 import utils.utils as ut
 
 st.title("NBA Statistics 🏀")
-st.write("Powered by a secret api ⚡")
+st.write("Made with 💚 by Tadiwa Shangwa")
 "----------------------------------------------------------"
 
 # Statistics and Data
