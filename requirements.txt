@@ -4,3 +4,4 @@ matplotlib
 multipledispatch
 IPython
 big-O
+plotly
