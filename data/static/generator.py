@@ -7,8 +7,11 @@ from IPython.core.display import JSON
 from data.models.team_model import TeamModel
 import utils.utils as ut
 from pathlib import Path
+from data.apis.teams_api import TeamsAPI as tapi
+from data.apis.teams_api import TeamModel
 
 pd = pd
+api = tapi()
 
 class Static:
     
@@ -20,6 +23,7 @@ class Static:
     def __init__(self) -> None:
         self.initialize_static_file()
         self.generate_team_points()
+        self.generate_team_percentages
 
     def genarate_team_ids(self):
         data = req.get(self.url).text
@@ -86,6 +90,17 @@ class Static:
         df = self.read_team_ids()
         team = df.loc[df["Display Name"] == display_name]
         return team["Id"][0]
+    
+    def get_team_names(self):
+        df = pd.read_csv("./data/static/team_ids.csv")
+        df = df.sort_values("Abbreviation")
+        df = df["Abbreviation"].values
+        teams = []
+
+        for x in range(0, 30):
+            teams.append(df[x])
+
+        return teams
 
     def generate_team_points(self):
         path = Path("./data/static/team_points.csv")
@@ -97,3 +112,29 @@ class Static:
         team_points = pd.read_csv("./data/static/team_points.csv")
         return team_points
 
+    def generate_team_percentages(self):
+        path = Path("./data/static/win_percentages.csv")
+
+        if not path.exists():
+            percentages = []
+            team = []
+
+            for x in range(1, 31):
+                data = api.getTeamData(x)
+                team.append(data.display_name)
+                percentages.append(round(data.stats.win_percentage, 2))
+
+            df = pd.DataFrame({
+                "Team":team,
+                "Win Percentage":percentages
+            })
+
+            file = open("./data/static/win_percentages.csv", "w")
+            string = df.to_csv()
+            file.write(string)
+            file.close
+    
+
+    def get_win_percentages(self):
+        self.generate_team_percentages()
+        return pd.read_csv("./data/static/win_percentages.csv")
