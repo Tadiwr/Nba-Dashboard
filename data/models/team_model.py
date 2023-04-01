@@ -1,5 +1,4 @@
 from pandas import Series
-import pandas as pd
 
 class __StatsModel__:
 
