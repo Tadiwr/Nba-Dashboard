@@ -1,19 +1,17 @@
 import json
+import datetime as dt
 import pandas as pd
 from os import path
 import requests as req
-from multipledispatch import dispatch
-from IPython.core.display import JSON
-from data.models.team_model import TeamModel
 import utils.utils as ut
 from pathlib import Path
 from data.apis.teams_api import TeamsAPI as tapi
-from data.apis.teams_api import TeamModel
 
-pd = pd
+
 api = tapi()
 
 class Static:
+    
     
     url = "http://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams"
 
@@ -21,9 +19,13 @@ class Static:
     team_points_path = "./team_points"
 
     def __init__(self) -> None:
+        lastUpdated = self.reading_file()
+        today = str(dt.date.today())
+        if lastUpdated != today :
+            self.generate_team_points()
+            self.generate_team_percentages()
         self.initialize_static_file()
-        self.generate_team_points()
-        self.generate_team_percentages
+  
 
     def genarate_team_ids(self):
         data = req.get(self.url).text
@@ -103,38 +105,49 @@ class Static:
         return teams
 
     def generate_team_points(self):
-        path = Path("./data/static/team_points.csv")
-        if not path.is_file():
-            team_points = ut.getAllTeamsPoints(1)
-            team_points = team_points.to_csv("./data/static/team_points.csv")
+        team_points = ut.getAllTeamsPoints(1)
+        team_points = team_points.to_csv("./data/static/team_points.csv")
+        today = str(dt.date.today())
+        self.write_state(today)
 
     def get_team_points(self):
         team_points = pd.read_csv("./data/static/team_points.csv")
         return team_points
 
     def generate_team_percentages(self):
-        path = Path("./data/static/win_percentages.csv")
-
-        if not path.exists():
-            percentages = []
-            team = []
-
-            for x in range(1, 31):
-                data = api.getTeamData(x)
-                team.append(data.display_name)
-                percentages.append(round(data.stats.win_percentage, 2))
-
-            df = pd.DataFrame({
-                "Team":team,
-                "Win Percentage":percentages
-            })
-
-            file = open("./data/static/win_percentages.csv", "w")
-            string = df.to_csv()
-            file.write(string)
-            file.close
     
+        percentages = []
+        team = []
+
+        for x in range(1, 31):
+            data = api.getTeamData(x)
+            team.append(data.display_name)
+            percentages.append(round(data.stats.win_percentage, 2))
+
+        df = pd.DataFrame({
+            "Team":team,
+            "Win Percentage":percentages
+        })
+
+        file = open("./data/static/win_percentages.csv", "w")
+        string = df.to_csv()
+        file.write(string)
+        file.close
+        today = str(dt.date.today())
+        self.write_state(today)
+
 
     def get_win_percentages(self):
         self.generate_team_percentages()
         return pd.read_csv("./data/static/win_percentages.csv")
+
+    def write_state(self, string:str):
+        file = open("state.txt", "w")
+        file.write(string)
+        file.close
+    
+    def reading_file(self) -> list[str]:
+        file = open("state.txt", "r")
+        data = file.read()
+        file.close
+        return data
