@@ -20,8 +20,6 @@ st.write("Made with 💚 by Tadiwa Shangwa")
 points = rp.static.get_team_points()
 points = points.sort_values(by="Points Scored")
 ave = int(points.mean()["Points Scored"])
-leastPoints = 0
-mostPoints = 0
 
 # Views
 "# Points Breakdown 😃✨"
