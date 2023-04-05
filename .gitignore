@@ -2,4 +2,5 @@
 # Ignored Files
 .ipynb_checkpoints/
 .__pycache__
-team_ids.csv
+./data/static/team_points.csv
+./data/static/win_percentages.csv
