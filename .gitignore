@@ -4,3 +4,4 @@
 .__pycache__
 ./data/static/team_points.csv
 ./data/static/win_percentages.csv
+.state.txt
