@@ -24,8 +24,6 @@ ave_points_scored = int(points.mean()["Points Scored"])
 "# Points Breakdown 😃✨"
 most_points_col, least_points_col, ave_points_col = st.columns(3)
 
-st.sidebar.markdown("Overview of the league")
-
 def mostPoints():
     
     # Since the points are sorted from 

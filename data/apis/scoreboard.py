@@ -13,18 +13,28 @@ def getScoreBoard():
     shortNames = []
     dates = []
     times = []
+    status = []
     for event in events:
         game = event["shortName"]
         game_date = event["date"].split("T")[0]
         game_time = event["date"].split("T")[1]
+        is_completed = event["status"]["type"]["completed"]
+
+        if is_completed:
+            is_completed = "Full Time"
+        else:
+            is_completed = "Upcoming/Live"
+
         times.append(game_time)
         dates.append(game_date)
         shortNames.append(game)
+        status.append(is_completed)
 
     scoreboard = pd.DataFrame({
         "Games":shortNames,
         "Date": dates,
-        "Time":times
+        "Time":times,
+        "Game Status": status
     })
 
     return scoreboard
