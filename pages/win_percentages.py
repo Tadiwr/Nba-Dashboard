@@ -6,7 +6,6 @@ from data.repo import Repo as rp
 import utils.utils as ut 
 
 st.title("Win Percentages 🍾")
-"\n"
 data = rp.static.get_win_percentages()
 
 "---------------------------------"

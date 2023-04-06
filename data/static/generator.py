@@ -19,7 +19,7 @@ class Static:
     team_points_path = "./team_points"
 
     def __init__(self) -> None:
-        lastUpdated = self.reading_file()
+        lastUpdated = self.reading_state()
         today = str(dt.date.today())
         if lastUpdated != today :
             self.generate_team_points()
@@ -132,22 +132,24 @@ class Static:
         file = open("./data/static/win_percentages.csv", "w")
         string = df.to_csv()
         file.write(string)
-        file.close
+        file.close()
         today = str(dt.date.today())
         self.write_state(today)
 
-
     def get_win_percentages(self):
-        self.generate_team_percentages()
+        state = self.reading_state()
+        today = str(dt.date.today())
+        if state != today:
+            self.generate_team_percentages()
         return pd.read_csv("./data/static/win_percentages.csv")
 
     def write_state(self, string:str):
         file = open("state.txt", "w")
         file.write(string)
-        file.close
+        file.close()
     
-    def reading_file(self) -> list[str]:
+    def reading_state(self) -> list[str]:
         file = open("state.txt", "r")
         data = file.read()
-        file.close
+        file.close()
         return data

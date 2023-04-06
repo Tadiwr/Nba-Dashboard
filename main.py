@@ -4,62 +4,63 @@ import streamlit as st
 import pandas as pd
 from data.repo import Repo as rp
 
-# config
-
+# Setting Page Layout and title
 st.set_page_config(
     page_title="NBA STATS",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="expanded",
+    page_icon="🏀📉"
 )
 
 st.title("NBA Statistics 🏀")
 st.write("Made with 💚 by Tadiwa Shangwa")
 "----------------------------------------------------------"
 
-# Statistics and Data
-points = rp.static.get_team_points()
-points = points.sort_values(by="Points Scored")
-ave = int(points.mean()["Points Scored"])
+# Grabbing points data and sorting in ascending order
+points = rp.static.get_team_points().sort_values(by="Points Scored")
+ave_points_scored = int(points.mean()["Points Scored"])
 
-# Views
+
 "# Points Breakdown 😃✨"
-col1, col2, col3 = st.columns(3)
-
-st.sidebar.markdown("Overview of the league")
-
+most_points_col, least_points_col, ave_points_col = st.columns(3)
 
 def mostPoints():
     
-    mostPoints = points.iloc[-1]
-    offAverage = int(mostPoints["Points Scored"]) - ave
+    # Since the points are sorted from 
+    # A-Z then the heights points are on the last row
+    most_points = points.iloc[-1]
 
-    col1.markdown("### Most Points Scored")
-    col1.metric(
-        mostPoints["Team"],
-        str(mostPoints["Points Scored"]),
-        delta=offAverage
+    off_average = int(most_points["Points Scored"]) - ave_points_scored
+
+    most_points_col.markdown("### Most Points Scored")
+    most_points_col.metric(
+        most_points["Team"],
+        str(most_points["Points Scored"]),
+        delta=off_average
     )
 
 
 def leastPoints():
-    leastPoints = points.iloc[0]
-    offAverage = -(ave - int(leastPoints["Points Scored"]))
 
-    col2.markdown("### Least Points Scored")
-    col2.metric(
-        label = leastPoints["Team"],
-        value = int(leastPoints["Points Scored"]),
+    # Since the points are sorted from 
+    # A-Z then the min points are on the first row
+    least_points = points.iloc[0]
+
+    offAverage = -(ave_points_scored - int(least_points["Points Scored"]))
+    least_points_col.markdown("### Least Points Scored")
+    least_points_col.metric(
+        label = least_points["Team"],
+        value = int(least_points["Points Scored"]),
         delta=offAverage,
     )
 
 def avePoints():
-    col3.markdown("### Average Points Scored")
-    col3.metric(
+
+    ave_points_col.markdown("### Average Points Scored")
+    ave_points_col.metric(
         "Rounded Average",
-        int(ave),
+        int(ave_points_scored),
     )
-
-
 
 leastPoints()
 mostPoints()
@@ -67,8 +68,8 @@ avePoints()
 
 "----------------------------------------------------------"
 
+# Bar chart for team points
 "# Team Points 📊"
-order_points = points
 st.bar_chart(
     points,
     x="Team",
