@@ -9,7 +9,6 @@ st.set_page_config(
     page_title="NBA STATS",
     layout="wide",
     initial_sidebar_state="expanded",
-    page_icon="🏀📉"
 )
 
 st.title("NBA Statistics 🏀")

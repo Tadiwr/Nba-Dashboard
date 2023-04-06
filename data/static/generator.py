@@ -1,9 +1,8 @@
 import json
-import datetime as dt
-import pandas as pd
 from os import path
+import pandas as pd
+import datetime as dt
 import requests as req
-import utils.utils as ut
 from pathlib import Path
 from data.apis.teams_api import TeamsAPI as tapi
 
@@ -19,9 +18,9 @@ class Static:
     team_points_path = "./team_points"
 
     def __init__(self) -> None:
-        lastUpdated = self.reading_state()
+        last_updated = self.reading_state()
         today = str(dt.date.today())
-        if lastUpdated != today :
+        if last_updated != today :
             self.generate_team_points()
             self.generate_team_percentages()
         self.initialize_static_file()
@@ -105,10 +104,13 @@ class Static:
         return teams
 
     def generate_team_points(self):
-        team_points = ut.getAllTeamsPoints(1)
-        team_points = team_points.to_csv("./data/static/team_points.csv")
         today = str(dt.date.today())
-        self.write_state(today)
+        last_update = self.reading_state()
+
+        if today != last_update:
+            team_points = api.getAllTeamsPoints()
+            team_points = team_points.to_csv("./data/static/team_points.csv")
+            self.write_state(today)
 
     def get_team_points(self):
         team_points = pd.read_csv("./data/static/team_points.csv")
