@@ -14,18 +14,3 @@ class TeamsAPI:
         team_model = TeamModel(team_dict)
         return team_model
     
-    def getAllTeamsPoints(self):
-        team_points = []
-        team_names = []
-
-        for id in range(1, 31):
-            team = self.getTeamData(id=id)
-            team_points.append(team.stats.points_scored)
-            team_names.append(team.name)
-        
-        df = pd.DataFrame({
-        "Team":team_names,
-        "Points Scored":team_points
-        })
-        
-        return df
