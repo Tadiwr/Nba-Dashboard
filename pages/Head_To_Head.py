@@ -14,9 +14,9 @@ def get_team_stats(abbr):
     id = rp.static.get_team_id_by_abbr(abbr)
     team = rp.teams_api.getTeamData(id)
     team_stats = [
-        team.stats.wins, team.stats.loses,
-        team.stats.win_percentage, 
-        team.stats.points_scored,team.stats.streak
+        round(team.stats.wins), round(team.stats.loses),
+        round(team.stats.win_percentage), 
+        round(team.stats.points_scored),round(team.stats.streak)
     ]
 
     return team_stats
