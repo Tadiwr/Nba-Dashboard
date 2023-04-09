@@ -4,9 +4,6 @@ sys.path.append("../data")
 import streamlit as st
 from data.repo import Repo as rp
 
-
-st.title("Wins and Loses 🍻")
-
 def wins_widget():
     data = rp.static.get_team_wins_and_loses()
     data = data.filter(items = ["Team", "Wins"])
