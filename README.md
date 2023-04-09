@@ -1,7 +1,7 @@
 # NBA Statistics Dashboard
 by Tadiwanashe Shangwa 🥲
 
-[Check the dashboard out 🎉](https://tadiwr-nba-stats-jupyter-notebook-main-yeriu7.streamlit.app/)
+[Check the dashboard out 🎉](https://tadiwr-nba-dashboard-home--z5zmve.streamlit.app/)
 
 This is a dashboard that visualizes nba statistics. On the date of release its nothing much but overtime it will get better. If you want to contribute to this dashboard hit me up and let me know!
 
