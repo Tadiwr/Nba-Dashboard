@@ -147,6 +147,7 @@ def points_widgets():
 
     "----------------------------------------------------------"
 
+
     # Bar chart for team points
     "# Team Points 📊"
     st.bar_chart(
@@ -154,3 +155,26 @@ def points_widgets():
         x="Team",
         y="Points Scored",
     )
+
+    sort_option = st.radio(
+        label="Order",
+        options=["Highest to Lowest", "Lowest to Highest", "Alphabetical Order"],
+        horizontal=True
+    )
+
+    if sort_option == "Highest to Lowest":
+        points = points.sort_values(
+            by="Points Scored",
+            ascending=False
+        )
+    elif sort_option == "Alphabetical Order":
+        points = points.sort_values(by="Team")
+    else:
+        points = points.sort_values(
+            by="Points Scored",
+            ascending=True
+        )
+
+    st.table(points.filter(
+        items=["Team", "Points Scored"]
+    ))
