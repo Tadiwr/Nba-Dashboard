@@ -19,6 +19,7 @@ class Static:
     team_percentages_path = "./data/static/win_percentages.csv"
     last_updated_path = "last_updated.txt"
     win_perc_path = "./data/static/win_percentages.csv"
+    wins_and_loses_path = "./data/static/wins_and_loses.csv"
 
     def __init__(self) -> None:
         self.generate_team_stats()
@@ -83,6 +84,8 @@ class Static:
         team_points = []
         team_names = []
         percentages = []
+        wins = []
+        loses = []
 
         if today != last_update:
             for x in range(1, 31):
@@ -90,6 +93,8 @@ class Static:
                 team_names.append(team.display_name)
                 team_points.append(team.stats.points_scored)
                 percentages.append(team.stats.win_percentage)
+                wins.append(team.stats.wins)
+                loses.append(team.stats.loses)
 
             percentages_df = pd.DataFrame({
                 "Team":team_names,
@@ -101,10 +106,16 @@ class Static:
                 "Points Scored":team_points
             })
 
+            wins_df = pd.DataFrame({
+                "Team":team_names,
+                "Wins":wins,
+                "Loses":loses
+            })
+
             percentages_df.to_csv(self.team_percentages_path)
             points_df.to_csv(self.team_points_path)
+            wins_df.to_csv(self.wins_and_loses_path)
             self.write_date_last_updated(today)
-
 
     def get_team_points(self):
         self.generate_team_stats()
@@ -124,3 +135,7 @@ class Static:
         date = file.read()
         file.close()
         return date
+    
+    def get_team_wins_and_loses(self) -> pd.DataFrame:
+        self.generate_team_stats()
+        return pd.read_csv(self.wins_and_loses_path)
