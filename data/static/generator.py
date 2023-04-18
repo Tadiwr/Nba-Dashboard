@@ -5,6 +5,7 @@ import datetime as dt
 import requests as req
 from pathlib import Path
 from data.apis.teams_api import TeamsAPI as tapi
+from data.status import Status as sts
 
 # I cant import the repo class due
 # to circular imports
@@ -13,18 +14,16 @@ team_api = tapi()
 class Static:
     
     url = "http://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams"
-
+    status = sts()
     team_ids_path = "./data/static/team_ids.csv"
     team_points_path = "./data/static/team_points.csv"
     team_percentages_path = "./data/static/win_percentages.csv"
-    last_updated_path = "last_updated.txt"
     win_perc_path = "./data/static/win_percentages.csv"
     wins_and_loses_path = "./data/static/wins_and_loses.csv"
 
     def __init__(self) -> None:
         self.generate_team_stats()
         self.genarate_team_ids()
-  
 
     def genarate_team_ids(self):
         exists = path.exists(self.team_ids_path)
@@ -80,7 +79,7 @@ class Static:
 
     def generate_team_stats(self):
         today = str(dt.date.today())
-        last_update = self.read_date_last_updated()
+        last_update = self.status.get_last_updated()
         team_points = []
         team_names = []
         percentages = []
@@ -95,7 +94,7 @@ class Static:
                 percentages.append(team.stats.win_percentage)
                 wins.append(team.stats.wins)
                 loses.append(team.stats.loses)
-
+                
             percentages_df = pd.DataFrame({
                 "Team":team_names,
                 "Win Percentage":percentages
@@ -115,7 +114,7 @@ class Static:
             percentages_df.to_csv(self.team_percentages_path)
             points_df.to_csv(self.team_points_path)
             wins_df.to_csv(self.wins_and_loses_path)
-            self.write_date_last_updated(today)
+            self.status.update_last_updated()
 
     def get_team_points(self):
         self.generate_team_stats()
@@ -124,17 +123,6 @@ class Static:
     def get_win_percentages(self):
         self.generate_team_stats()
         return pd.read_csv(self.win_perc_path)
-
-    def write_date_last_updated(self, string:str):
-        file = open(self.last_updated_path, "w")
-        file.write(string)
-        file.close()
-    
-    def read_date_last_updated(self) -> list[str]:
-        file = open(self.last_updated_path, "r")
-        date = file.read()
-        file.close()
-        return date
     
     def get_team_wins_and_loses(self) -> pd.DataFrame:
         self.generate_team_stats()
