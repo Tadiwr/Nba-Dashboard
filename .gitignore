@@ -6,3 +6,4 @@
 ./data/static/win_percentages.csv
 .state.txt
 *.ipynb
+.idea
