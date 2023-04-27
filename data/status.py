@@ -10,13 +10,12 @@ class Status:
 
 
     def __init__(self):
-
-        file = open(self.file_path, "rw")
+        file = open(self.file_path, "r")
 
         self.json_str = file.read()
         file.close()
 
-        self.status_dict = json.loads(json_str)
+        self.status_dict = json.loads(self.json_str)
 
 
     def __commit_changes__(self):

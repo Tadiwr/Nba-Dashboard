@@ -1,5 +1,8 @@
 import sys
+from threading import Thread
 sys.path.append("./data")
+sys.path.append("./backend")
+from main import run_pipeline
 import streamlit as st
 import pandas as pd
 from data.repo import Repo as rp
@@ -27,3 +30,8 @@ elif option == "Points":
     wg.points_widgets()
 else:
     wg.loses_widgets()
+
+pipeline_thread = Thread(target=run_pipeline()) 
+
+if __name__ == "__main__":
+    pipeline_thread.start()

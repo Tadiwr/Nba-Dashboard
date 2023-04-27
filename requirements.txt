@@ -3,3 +3,5 @@ streamlit
 matplotlib
 multipledispatch
 IPython
+pymongo
+tqdm
